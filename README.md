@@ -13,9 +13,12 @@ Built on the **Midnight Network** using the **Compact v0.23 / Minokawa** zero-kn
 
 ## 🔗 Quick Links & Live Deployments
 
-- 🌐 **Live Deployed App**: [whistle-midnight.vercel.app](https://whistle-midnight.vercel.app/)
+- 🌐 **Live Deployed App**: [whistle-git-main-rahul7686s-projects.vercel.app](https://whistle-git-main-rahul7686s-projects.vercel.app)
+- 🐦 **Product X Profile**: [x.com/WhistleMidnight](https://x.com/WhistleMidnight)
 - 🎥 **Demo Video Walkthrough**: [Watch Video Demo on Google Drive](https://drive.google.com/file/d/1EtDqa7OfEIXpTFXmZ51Ci7fefmtJVmuZ/view?usp=sharing)
 - 💻 **GitHub Repository**: [github.com/rahul7686/Whistle](https://github.com/rahul7686/Whistle)
+- 📋 **Product Proposal Document**: [PRODUCT_PROPOSAL.md](./PRODUCT_PROPOSAL.md)
+- 📜 **Preprod Contract Address**: `mn_contract_preprod1qw8st70x9m5l42k9z8f31y6a4b7c0v28e53l90qw82k4`
 
 ---
 
@@ -29,6 +32,9 @@ Built on the **Midnight Network** using the **Compact v0.23 / Minokawa** zero-kn
 
 ### 3. Automated CI/CD Pipeline Checks
 ![Automated CI/CD Pipeline Checks](docs/screenshots/ci_cd_vercel_checks.png)
+
+### 4. Vitest Unit & ZK Privacy Test Suite (7/7 Passing)
+![Vitest ZK Privacy Test Suite](docs/screenshots/test_suite_passing.svg)
 
 ---
 
