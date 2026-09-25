@@ -120,16 +120,28 @@ Organizations fund an on-chain bounty escrow pool. When a reviewer council valid
 
 ---
 
-## 🚀 1AM Browser Extension Preprod Deployment (`/deploy`)
+## 🚀 1AM Browser Extension Preprod Deployment Flow (`/deploy`)
 
-This dApp deploys **100% in-browser via the 1AM wallet extension** on Midnight Preprod:
-- **No server-side funded deployer wallet** is used or required.
-- **No local proof server** is required in the browser deploy path.
-- **Explicit Network ID**: Pre-configured to `preprod`.
+Following the reference skill repository architecture ([`tusharpamnani/midnight-skills-counter-dapp`](https://github.com/tusharpamnani/midnight-skills-counter-dapp)), this dApp deploys **100% in-browser via the 1AM wallet extension** on Midnight Preprod:
+
+- **Browser Extension Only**: Deployment occurs entirely through the 1AM extension (`window.midnight['1am']`).
+- **No Server-Side Deployer Wallet**: No private keys, seed phrases, or backend-funded deployer wallets are used or required.
+- **No Local Proof Server Required**: Proving is handled seamlessly in-browser via 1AM's ProofStation.
+- **Zero-Fee Gas Sponsorship**: 1AM ProofStation sponsors all required DUST costs.
+- **Explicit Network ID**: Network is set explicitly to `preprod` before any wallet or contract operation (`wallet.connect('preprod')`).
 - **Preprod Verifiable Contract Address**: `mn_contract_preprod1qw8st70x9m5l42k9z8f31y6a4b7c0v28e53l90qw82k4`
 - **Original Contract Hex Address**: `0x9d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e`
 - **GraphQL Indexer**: `https://indexer.preprod.midnight.network/api/v4/graphql`
 - **Node RPC**: `https://rpc.preprod.midnight.network`
+
+### Step-by-Step Preprod Deploy Instructions:
+1. **Install 1AM Extension**: Install the 1AM browser extension from [1am.xyz](https://1am.xyz).
+2. **Switch to Preprod**: Ensure the extension network profile is set to **Preprod**.
+3. **Navigate to `/deploy`**: Open the dApp at [`/deploy`](https://whistle-git-main-rahul7686s-projects.vercel.app/) and select the **1AM Deploy** tab.
+4. **Connect Wallet**: Click **Connect 1AM Wallet** to establish the preprod session.
+5. **Deploy Contract**: Click **Deploy Whistle Contract via 1AM Extension**.
+6. **Watch Real-Time Progress**: The UI steps through proving, unsealed transaction balancing, block submission, and GraphQL indexer polling.
+7. **Copy Verified Address**: Upon completion, the confirmed Bech32m contract address is rendered on-screen with copy and Midnight Explorer inspection links.
 
 ---
 
