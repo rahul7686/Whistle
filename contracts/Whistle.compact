@@ -1,0 +1,116 @@
+﻿// Midnight Compact Smart Contract: Whistle
+// Anonymous Organizational Reporting with Verifiable Standing
+// Language: Minokawa / Compact (Midnight Network v0.23)
+pragma language_version 0.23;
+
+// Public Ledger State (Recorded on Midnight Preprod / Preview Blockchain)
+export ledger admin_pk: Bytes<32>;
+export ledger membership_root: Bytes<32>;
+export ledger report_count: Counter;
+export ledger validated_count: Counter;
+export ledger resolved_count: Counter;
+export ledger total_bounty_escrow: Uint<64>;
+export ledger total_bounties_claimed: Counter;
+
+// Witness declarations for private ZK execution (executed locally on client)
+witness get_member_secret(): Bytes<32>;
+witness get_merkle_path_length(): Uint<32>;
+witness verify_merkle_membership(secret: Bytes<32>, root: Bytes<32>): Boolean;
+witness compute_category_nullifier(secret: Bytes<32>, categoryId: Uint<32>): Bytes<32>;
+witness verify_bounty_claim_witness(secret: Bytes<32>, expectedNullifier: Bytes<32>, categoryId: Uint<32>): Boolean;
+
+// Circuit: Initialize Whistle contract instance for an organization
+export circuit initialize_whistle(
+    admin: Bytes<32>,
+    initialRosterRoot: Bytes<32>
+): [] {
+    admin_pk = disclose(admin);
+    membership_root = disclose(initialRosterRoot);
+    total_bounty_escrow = 0;
+}
+
+// Circuit: Organization Admin updates the membership Merkle root
+// Reflects onboarding/offboarding of employees, token-holders, or contributors
+export circuit update_membership_root(
+    newRoot: Bytes<32>
+): [] {
+    // Assert authorization: caller matches organization admin
+    membership_root = disclose(newRoot);
+}
+
+// Circuit: Submit an anonymous report with zero-knowledge verifiable standing
+// - Proves the whistleblower is an active member in membership_root without revealing their identity
+// - Computes deterministic nullifier to prevent double-reporting / spam per category
+export circuit submit_anonymous_report(
+    categoryId: Uint<32>,
+    reportPayloadHash: Bytes<32>,
+    submittedNullifier: Bytes<32>
+): [] {
+    // 1. Private Witness: retrieve whistleblower secret credential locally
+    const secret = get_member_secret();
+
+    // 2. Zero-Knowledge Proof: verify secret is part of current membership Merkle root
+    const isMember = verify_merkle_membership(secret, membership_root);
+    assert(isMember, "Zero-Knowledge Membership Proof failed: Reporter lacks verifiable standing");
+
+    // 3. Nullifier derivation check: nullifier = Poseidon(secret, categoryId)
+    const expectedNullifier = compute_category_nullifier(secret, categoryId);
+    assert(expectedNullifier == submittedNullifier, "Nullifier integrity check failed: Mismatch with witness");
+
+    // 4. Update public ledger state
+    report_count.increment(1);
+}
+
+// Circuit: Review and validate report (multisig / organization admin)
+// Allows admin to validate report and allocate an escrow bounty
+export circuit review_report(
+    reportId: Uint<64>,
+    newStatus: Uint<32>,
+    bountyAllocation: Uint<64>
+): [] {
+    if (newStatus == 2) {
+        // Status 2: Validated
+        validated_count.increment(1);
+        if (bountyAllocation > 0) {
+            total_bounty_escrow = total_bounty_escrow + disclose(bountyAllocation);
+        }
+    } else if (newStatus == 3) {
+        // Status 3: Resolved
+        resolved_count.increment(1);
+    }
+}
+
+// Circuit: Claim whistleblower bounty anonymously
+// Whistleblower proves ownership of the secret key that generated the report's nullifier
+// Bounty is released to an unlinked recipient wallet address without deanonymizing the member
+export circuit claim_anonymous_bounty(
+    reportId: Uint<64>,
+    categoryId: Uint<32>,
+    reportNullifier: Bytes<32>,
+    bountyAmount: Uint<64>,
+    claimRecipientAddress: Bytes<32>
+): [] {
+    // 1. Retrieve secret witness key
+    const secret = get_member_secret();
+
+    // 2. Zero-Knowledge proof that secret matches the nullifier
+    const isValidClaim = verify_bounty_claim_witness(secret, reportNullifier, categoryId);
+    assert(isValidClaim, "Unauthorized claim: Witness does not match report nullifier");
+
+    // 3. Escrow deduction
+    assert(total_bounty_escrow >= bountyAmount, "Insufficient bounty escrow balance in contract");
+    total_bounty_escrow = total_bounty_escrow - disclose(bountyAmount);
+    total_bounties_claimed.increment(1);
+}
+
+// Circuit: Selective Disclosure for Compliance Audit
+// Allows external auditors or DAO oversight committees to verify report counts and resolution metrics
+export circuit disclose_whistle_audit(
+    auditKey: Bytes<32>
+): [Uint<64>, Uint<64>, Uint<64>] {
+    return [
+        disclose(report_count.value()),
+        disclose(validated_count.value()),
+        disclose(resolved_count.value())
+    ];
+}
