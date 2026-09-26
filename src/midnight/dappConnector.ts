@@ -102,17 +102,16 @@ export class MidnightDAppConnector {
 
     return new Promise((resolve) => {
       let attempts = 0;
-      const maxAttempts = Math.floor(timeoutMs / 100);
       const interval = setInterval(() => {
         const found = findInWindow();
         if (found) {
           clearInterval(interval);
           resolve(found);
-        } else if (++attempts >= maxAttempts) {
+        } else if (++attempts >= 4) {
           clearInterval(interval);
           resolve(null);
         }
-      }, 100);
+      }, 400);
     });
   }
 

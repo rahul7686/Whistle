@@ -16,22 +16,37 @@ export function fromHex(hex: string): Uint8Array {
 
 export function detectWallet(): Promise<any | null> {
   return new Promise((resolve) => {
-    let attempts = 0;
-    const check = () => {
-      const wallet =
-        (typeof window !== 'undefined' ? (window as any).midnight?.['1am'] || (window as any).midnight?.['1AM'] : null) ||
-        (typeof window !== 'undefined' ? (window as any).midnight?.mnLace || (window as any).midnight?.lace : null);
-      if (wallet) {
-        resolve(wallet);
-        return;
-      }
-      if (++attempts > 50) {
-        resolve(null);
-        return;
-      }
-      setTimeout(check, 100);
+    if (typeof window === 'undefined') {
+      resolve(null);
+      return;
+    }
+    const checkDirect = () => {
+      return (
+        (window as any).midnight?.['1am'] ||
+        (window as any).midnight?.['1AM'] ||
+        (window as any).midnight?.mnLace ||
+        (window as any).midnight?.lace ||
+        null
+      );
     };
-    check();
+
+    const immediate = checkDirect();
+    if (immediate) {
+      resolve(immediate);
+      return;
+    }
+
+    let attempts = 0;
+    const interval = setInterval(() => {
+      const found = checkDirect();
+      if (found) {
+        clearInterval(interval);
+        resolve(found);
+      } else if (++attempts >= 5) {
+        clearInterval(interval);
+        resolve(null);
+      }
+    }, 400);
   });
 }
 
