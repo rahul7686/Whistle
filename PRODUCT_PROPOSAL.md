@@ -5,7 +5,7 @@
 
 - 🌐 **Live Deployed App**: [whistle-sigma.vercel.app](https://whistle-sigma.vercel.app)
 - 🐦 **Product X Profile**: [@WhistleMnight](https://x.com/WhistleMnight)
-- 🎥 **Demo Video Walkthrough**: [Watch Video Demo on Google Drive](https://drive.google.com/file/d/1EtDqa7OfEIXpTFXmZ51Ci7fefmtJVmuZ/view?usp=sharing)
+- 🎥 **Demo Video Walkthrough**: [Watch Video Demo on Google Drive](https://drive.google.com/file/d/1GVkgAs8on9pxLmytOX-TbrL8tg2PilrW/view?usp=sharing)
 - 💻 **GitHub Repository**: [github.com/rahul7686/Whistle](https://github.com/rahul7686/Whistle)
 - 📜 **Preprod Smart Contract**: `mn_contract_preprod1qw8st70x9m5l42k9z8f31y6a4b7c0v28e53l90qw82k4`
 
