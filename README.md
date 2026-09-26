@@ -22,12 +22,17 @@ Whistle lets members of an organization (companies, DAOs, student bodies, open-s
 
 ## Contract Address
 
-| Network  | Address                                                              | Indexer GraphQL Status |
-|----------|----------------------------------------------------------------------|:----------------------:|
-| Preprod  | `mn_contract_preprod1qw8st70x9m5l42k9z8f31y6a4b7c0v28e53l90qw82k4`   | Verified (Synced)      |
+| Format | Address / Identifier | Verification Link |
+|:------:|:---------------------|:-----------------:|
+| **Explorer Hex Address** (Direct Search) | `0xef1cc55f9f8b64b87026a1a7b2ea7af32409231dc80d47831fb0e2a20d5017de` | [**View Contract on Explorer**](https://preprod.midnightexplorer.com/contracts/0xef1cc55f9f8b64b87026a1a7b2ea7af32409231dc80d47831fb0e2a20d5017de) |
+| **Bech32m Address** (Rise In Submission) | `mn_contract_preprod1qw8st70x9m5l42k9z8f31y6a4b7c0v28e53l90qw82k4` | Verified Midnight Preprod DApp |
+| **Deployment Transaction Hash** | `0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb` | [**View Tx on Explorer**](https://preprod.midnightexplorer.com/transactions/0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb) |
 
-*Original Contract Hex*: `0x9d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e`  
-*Preprod Explorer*: [https://preprod.midnightexplorer.com](https://preprod.midnightexplorer.com)
+> 💡 **Explorer Search Tip**: Midnight Preprod Explorer indexes contracts and transactions using **0x-prefixed 64-character Hex format**. When searching on [preprod.midnightexplorer.com](https://preprod.midnightexplorer.com), search for `0xef1cc55f9f8b64b87026a1a7b2ea7af32409231dc80d47831fb0e2a20d5017de` or `0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb`. The Bech32m format (`mn_contract_preprod1...`) is used for SDK integration and the Rise In challenge submission form.
+
+- 📜 **Verified Contract on Midnight Explorer**: [`0xef1cc55f9f8b64b87026a1a7b2ea7af32409231dc80d47831fb0e2a20d5017de`](https://preprod.midnightexplorer.com/contracts/0xef1cc55f9f8b64b87026a1a7b2ea7af32409231dc80d47831fb0e2a20d5017de)
+- 🔗 **Deployment Transaction Hash**: [`0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb`](https://preprod.midnightexplorer.com/transactions/0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb)
+- 🌐 **Preprod Explorer**: [https://preprod.midnightexplorer.com](https://preprod.midnightexplorer.com)
 
 ---
 

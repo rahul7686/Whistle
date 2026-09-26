@@ -150,8 +150,17 @@ export const PreprodExplorer: React.FC = () => {
                   <td className="py-3.5 px-4 text-emerald-400 font-bold">
                     {report.bountyAmount > 0 ? report.bountyAmount + ' tNIGHT' : '—'}
                   </td>
-                  <td className="py-3.5 px-4 text-slate-500 select-all">
-                    {report.txHash.slice(0, 10)}...{report.txHash.slice(-6)}
+                  <td className="py-3.5 px-4 text-slate-400 select-all font-mono text-[11px]">
+                    <a
+                      href={`https://preprod.midnightexplorer.com/transactions/${report.txHash}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center space-x-1 text-slate-400 hover:text-midnight-accent hover:underline"
+                      title="View on Midnight Preprod Explorer"
+                    >
+                      <span>{report.txHash.slice(0, 10)}...{report.txHash.slice(-6)}</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
                   </td>
                 </tr>
               ))}

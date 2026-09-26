@@ -13,6 +13,7 @@ import {
   Sparkles,
   ChevronRight,
   Cpu,
+  ExternalLink,
 } from 'lucide-react';
 import {
   WhistleSimulator,
@@ -223,6 +224,17 @@ export const WhistleblowerSubmit: React.FC<WhistleblowerSubmitProps> = ({
               <Download className="w-3.5 h-3.5 text-midnight-accent" />
               <span>Download Receipt File</span>
             </button>
+            {completedReceipt.txHash && (
+              <a
+                href={`https://preprod.midnightexplorer.com/transactions/${completedReceipt.txHash}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-200 bg-midnight-800 border border-midnight-700 hover:text-midnight-accent hover:bg-midnight-700 transition-all"
+              >
+                <span>View on Explorer</span>
+                <ExternalLink className="w-3.5 h-3.5 text-midnight-accent" />
+              </a>
+            )}
             {onNavigateToClaim && (
               <button
                 onClick={() => onNavigateToClaim(completedReceipt)}

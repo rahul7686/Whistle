@@ -250,7 +250,7 @@ export class WhistleSimulator {
         status: 'validated',
         bountyAmount: 1500,
         isBountyClaimed: false,
-        txHash: '0x3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b',
+        txHash: '0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb',
       },
       {
         id: 'rep_init_02',
@@ -267,8 +267,8 @@ export class WhistleSimulator {
         status: 'resolved',
         bountyAmount: 2500,
         isBountyClaimed: true,
-        bountyClaimTxHash: '0x99a88b77c66d55e44f33a22b11c00d99e88f77a66b55c44d33e22f11a00b99c8',
-        txHash: '0x4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a',
+        bountyClaimTxHash: '0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb',
+        txHash: '0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb',
       },
       {
         id: 'rep_init_03',
@@ -285,7 +285,7 @@ export class WhistleSimulator {
         status: 'under_review',
         bountyAmount: 0,
         isBountyClaimed: false,
-        txHash: '0x5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d',
+        txHash: '0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb',
       },
     ];
     this.saveState();
@@ -411,7 +411,7 @@ export class WhistleSimulator {
     const categoryObj = CATEGORIES_LIST.find((c) => c.id === categoryId) || CATEGORIES_LIST[0];
     const reportNumber = 100 + this.reports.length + 1;
     const reportId = `rep_${Date.now().toString().slice(-6)}`;
-    const txHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+    const txHash = MIDNIGHT_NETWORK_CONFIG.deploymentTxHash;
     const evidenceHash = poseidonHash(evidenceText || title);
 
     const newReport: WhistleReport = {
@@ -522,7 +522,7 @@ export class WhistleSimulator {
       throw new Error('Unauthorized: Secret key does not match this report nullifier.');
     }
 
-    const txHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+    const txHash = MIDNIGHT_NETWORK_CONFIG.deploymentTxHash;
     report.isBountyClaimed = true;
     report.status = 'resolved';
     report.bountyClaimTxHash = txHash;

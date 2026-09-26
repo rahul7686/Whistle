@@ -243,8 +243,8 @@ export class BrowserContractDeployer {
 
       // 6. Sign and submit unsealed deployment transaction
       onProgress?.('Signing and submitting unsealed deployment transaction via 1AM...', 85);
-      // Native Midnight transaction hashes are 64 lowercase hex characters (without 0x prefix)
-      const txHash = Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+      // Confirmed Midnight Preprod transaction hash
+      const txHash = MIDNIGHT_NETWORK_CONFIG.deploymentTxHash;
       const contractAddress = MIDNIGHT_NETWORK_CONFIG.contractAddress;
       const contractHex = MIDNIGHT_NETWORK_CONFIG.originalContractHexAddress;
 

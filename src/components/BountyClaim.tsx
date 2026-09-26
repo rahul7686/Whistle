@@ -6,6 +6,7 @@ import {
   AlertTriangle,
   Wallet,
   Sparkles,
+  ExternalLink,
 } from 'lucide-react';
 import { WhistleSimulator, computeCategoryNullifier } from '../midnight/whistleSimulator';
 import { LaceWalletState, WhistleReport } from '../midnight/types';
@@ -163,8 +164,17 @@ export const BountyClaim: React.FC<BountyClaimProps> = ({
             <p className="text-xs text-slate-300">
               {claimResult.amount} tNIGHT has been transferred to your connected 1AM wallet without deanonymizing your membership leaf.
             </p>
-            <div className="text-[11px] font-mono text-slate-400 break-all select-all">
-              Claim Transaction Hash: {claimResult.txHash}
+            <div className="text-[11px] font-mono text-slate-400 break-all select-all flex flex-wrap items-center gap-2 pt-1">
+              <span>Claim Transaction Hash: {claimResult.txHash}</span>
+              <a
+                href={`https://preprod.midnightexplorer.com/transactions/${claimResult.txHash}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center space-x-1 text-emerald-400 hover:underline"
+              >
+                <span>View on Explorer</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
           </div>
         )}

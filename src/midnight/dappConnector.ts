@@ -13,7 +13,8 @@ export const MIDNIGHT_NETWORK_CONFIG = {
   indexerWsUri: 'wss://indexer.preprod.midnight.network/api/v4/graphql/ws',
   nodeRpcUri: 'https://rpc.preprod.midnight.network',
   contractAddress: 'mn_contract_preprod1qw8st70x9m5l42k9z8f31y6a4b7c0v28e53l90qw82k4',
-  originalContractHexAddress: '0x9d4e5f6a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e',
+  originalContractHexAddress: '0xef1cc55f9f8b64b87026a1a7b2ea7af32409231dc80d47831fb0e2a20d5017de',
+  deploymentTxHash: '0x858f350b66a846f90ddf66e9be97ca4c84940aaaaa1bb49c4d0e555fe08793fb',
 };
 
 export function generateBech32mAddress(prefix: string = 'mn_addr_preprod1q', seed: string = 'whistle'): string {
