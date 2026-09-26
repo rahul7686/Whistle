@@ -182,11 +182,18 @@ For a step-by-step user walkthrough and troubleshooting guide, please see:
 
 ## 📸 Application Screenshots
 
-### 1. In-Browser 1AM Contract Deployment (`/deploy`)
-![1AM In-Browser Preprod Deployment](docs/screenshots/browser_deploy_desktop.png)
+### 1. Windows Layout — 1AM Preprod In-Browser Deployment (`/deploy`)
+*Live in-browser contract deployment on Midnight Preprod via the 1AM wallet extension, displaying verified Bech32m and Hex addresses.*
+![Windows Layout - 1AM Preprod Contract Deployment](docs/screenshots/windows_deploy_layout.png)
 
-### 2. Mobile Responsive Layout
-![Mobile Responsive UI](docs/screenshots/browser_deploy_mobile.png)
+### 2. Windows Layout — ZK Confidential Report Submission (`/submit`)
+*Confidential whistleblower portal proving membership standing in zero-knowledge with anti-spam category nullifiers.*
+![Windows Layout - Confidential Report Submission](docs/screenshots/windows_submit_layout.png)
 
-### 3. Automated CI/CD Pipeline Checks
-![Automated CI/CD Pipeline Checks](docs/screenshots/ci_cd_vercel_checks.png)
+### 3. Mobile Responsive Layout
+*Fully adaptive layout providing a seamless, secure reporting experience across all mobile viewports and devices.*
+![Mobile Responsive Layout](docs/screenshots/mobile_responsive_layout.png)
+
+### 4. CI/CD Pipeline & Vercel Checks Passed
+*All automated GitHub Actions CI/CD pipeline checks (Node 20.x & 22.x) and Vercel production deployments green and passing.*
+![CI/CD Pipeline and Vercel Checks Passed](docs/screenshots/ci_cd_passed_checks.png)
