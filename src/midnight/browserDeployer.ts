@@ -143,7 +143,7 @@ export async function createConnectedSession(
 
   if (typeof api.getConfiguration === 'function') {
     try {
-      const remoteConfig = await api.getConfiguration();
+      const remoteConfig = await Promise.resolve(api.getConfiguration()).catch(() => null);
       if (remoteConfig) {
         config = { ...config, ...remoteConfig };
       }
@@ -155,7 +155,7 @@ export async function createConnectedSession(
   let unshieldedAddress = generateBech32mAddress('mn_addr_preprod1q', 'unshielded-fallback');
   if (typeof api.getUnshieldedAddress === 'function') {
     try {
-      const res = await api.getUnshieldedAddress();
+      const res = await Promise.resolve(api.getUnshieldedAddress()).catch(() => null);
       unshieldedAddress = res?.unshieldedAddress || res?.address || res || unshieldedAddress;
     } catch (e) {
       console.warn('api.getUnshieldedAddress fallback:', e);
@@ -168,7 +168,7 @@ export async function createConnectedSession(
   };
   if (typeof api.getShieldedAddresses === 'function') {
     try {
-      const res = await api.getShieldedAddresses();
+      const res = await Promise.resolve(api.getShieldedAddresses()).catch(() => null);
       if (res) shieldedAddress = res;
     } catch (e) {
       console.warn('api.getShieldedAddresses fallback:', e);

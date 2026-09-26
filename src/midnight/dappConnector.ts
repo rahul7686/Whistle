@@ -90,16 +90,9 @@ export class MidnightDAppConnector {
         window.midnight['1am'] ||
         window.midnight['1AM'] ||
         window.midnight.mnLace ||
-        window.midnight.lace ||
-        window.midnight.oneAm;
+        window.midnight.lace;
       if (direct && (typeof direct.connect === 'function' || typeof direct.enable === 'function')) {
         return direct;
-      }
-      const entries = Object.values(window.midnight);
-      for (const api of entries) {
-        if (api && (typeof api.connect === 'function' || typeof api.enable === 'function')) {
-          return api;
-        }
       }
       return null;
     };
@@ -126,44 +119,64 @@ export class MidnightDAppConnector {
   public async connect(): Promise<LaceWalletState> {
     this.setNetworkIdExplicitly('preprod');
 
-    const wallet = await this.detectWallet(2000);
+    const wallet = await this.detectWallet(1500);
     if (wallet) {
       try {
-        let connectedAPI: any = null;
-        if (typeof wallet.connect === 'function') {
-          connectedAPI = await wallet.connect('preprod');
-        } else if (typeof wallet.enable === 'function') {
-          connectedAPI = await wallet.enable();
-        }
+        const connectPromise = (async () => {
+          if (typeof wallet.connect === 'function') {
+            return await wallet.connect('preprod');
+          } else if (typeof wallet.enable === 'function') {
+            return await wallet.enable();
+          }
+          return null;
+        })();
+
+        // 8-second timeout to prevent content script hangs if extension is idle or closed
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('1AM connection timed out')), 8000)
+        );
+
+        const connectedAPI: any = await Promise.race([connectPromise, timeoutPromise]);
 
         if (connectedAPI) {
-          let address: string | null = null;
-          if (typeof connectedAPI.getShieldedAddresses === 'function') {
-            try {
-              const addrs = await connectedAPI.getShieldedAddresses();
-              address = addrs?.shieldedAddress || addrs?.[0] || null;
-            } catch (e) {
-              console.warn('getShieldedAddresses fallback:', e);
-            }
-          }
-          if (!address && typeof connectedAPI.state === 'function') {
-            const st = await connectedAPI.state();
-            address = st.address || st.bech32Address || null;
-          }
+          // Fetch addresses safely in parallel with catch guards (mirrors midnight-wallet-kit)
+          const [shielded, unshielded] = await Promise.all([
+            typeof connectedAPI.getShieldedAddresses === 'function'
+              ? connectedAPI.getShieldedAddresses().catch(() => null)
+              : null,
+            typeof connectedAPI.getUnshieldedAddress === 'function'
+              ? connectedAPI.getUnshieldedAddress().catch(() => null)
+              : null,
+          ]);
+
+          const primaryAddress =
+            unshielded?.unshieldedAddress ||
+            unshielded?.address ||
+            shielded?.shieldedAddress ||
+            shielded?.[0] ||
+            null;
+
+          const coinPk =
+            shielded?.shieldedCoinPublicKey ||
+            '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+
+          const encPk =
+            shielded?.shieldedEncryptionPublicKey ||
+            '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
 
           this.state = {
             isConnected: true,
-            address: address || generateBech32mAddress('mn_addr_preprod1q', '1am-whistle-user'),
-            coinPublicKey: '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(''),
-            encryptionPublicKey: '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(''),
+            address: primaryAddress || generateBech32mAddress('mn_addr_preprod1q', '1am-whistle-user'),
+            coinPublicKey: coinPk,
+            encryptionPublicKey: encPk,
             networkId: 'preprod',
             balance: 10000000000n,
           };
           this.getStorage()?.setItem('whistle_1am_connected_address', this.state.address!);
           return this.state;
         }
-      } catch (err) {
-        console.warn('1AM connection error, falling back to simulated session:', err);
+      } catch (err: any) {
+        console.warn('1AM connection error or timeout, falling back to simulated session:', err?.message || err);
       }
     }
 
