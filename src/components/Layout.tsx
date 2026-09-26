@@ -66,6 +66,15 @@ export const Layout: React.FC<LayoutProps> = ({
               <span>Midnight Docs</span>
             </a>
             <a
+              href="https://x.com/WhistleMnight"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center space-x-1.5 text-midnight-accent hover:text-cyan-300 transition-colors font-semibold"
+            >
+              <span>X (@WhistleMnight)</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+            <a
               href="https://preprod.midnightexplorer.com"
               target="_blank"
               rel="noreferrer"

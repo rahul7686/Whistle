@@ -14,6 +14,7 @@ Whistle lets members of an organization (companies, DAOs, student bodies, open-s
 ## Live Demo
 
 - 🌐 **Live Demo (Preprod Web App)**: [https://whistle-sigma.vercel.app](https://whistle-sigma.vercel.app)
+- 🐦 **Product X Profile**: [@WhistleMnight](https://x.com/WhistleMnight)
 - 🎥 **Video Demo Walkthrough**: [Watch Demo on Google Drive](https://drive.google.com/file/d/1EtDqa7OfEIXpTFXmZ51Ci7fefmtJVmuZ/view?usp=sharing)
 - 💻 **GitHub Repository**: [https://github.com/rahul7686/Whistle](https://github.com/rahul7686/Whistle)
 - 📋 **Product Proposal Document**: [PROPOSAL.md](./PROPOSAL.md)
@@ -177,7 +178,7 @@ For a step-by-step user walkthrough and troubleshooting guide, please see:
 
 ## Product X Profile
 
-- 🐦 **Product X Profile**: [https://x.com/WhistleMidnight](https://x.com/WhistleMidnight)
+- 🐦 **Product X Profile**: [https://x.com/WhistleMnight](https://x.com/WhistleMnight) (`@WhistleMnight`)
 
 ---
 
