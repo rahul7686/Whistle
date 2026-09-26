@@ -3,7 +3,7 @@
 ## 1. Executive Summary
 **Whistle** is a zero-knowledge confidential organizational reporting and whistleblowing protocol built on the **Midnight Network** (Preprod Network). It allows members of an organization (such as enterprise employees, DAO contributors, university student bodies, or open-source maintainers) to prove they possess genuine standing to raise sensitive concerns without ever revealing *which* member they are, even to the organization itself.
 
-- 🌐 **Live Deployed App**: [whistle-midnight.vercel.app](https://whistle-midnight.vercel.app/)
+- 🌐 **Live Deployed App**: [whistle-sigma.vercel.app](https://whistle-sigma.vercel.app)
 - 🎥 **Demo Video Walkthrough**: [Watch Video Demo on Google Drive](https://drive.google.com/file/d/1EtDqa7OfEIXpTFXmZ51Ci7fefmtJVmuZ/view?usp=sharing)
 - 💻 **GitHub Repository**: [github.com/rahul7686/Whistle](https://github.com/rahul7686/Whistle)
 - 📜 **Preprod Smart Contract**: `mn_contract_preprod1qw8st70x9m5l42k9z8f31y6a4b7c0v28e53l90qw82k4`

@@ -20,7 +20,7 @@ Whistle enables verified members of an organization (employees, DAO contributors
 ## Step-by-Step Guide
 
 ### Step 1: Connect Your 1AM Wallet
-1. Open the Whistle dApp at [whistle-git-main-rahul7686s-projects.vercel.app](https://whistle-git-main-rahul7686s-projects.vercel.app/).
+1. Open the Whistle dApp at [whistle-sigma.vercel.app](https://whistle-sigma.vercel.app).
 2. Click **Connect 1AM** in the top navigation bar.
 3. Authorize the connection in the 1AM pop-up. The network indicator will turn green and display **Preprod**.
 
@@ -63,7 +63,7 @@ Whistle enables verified members of an organization (employees, DAO contributors
 ---
 
 ### Step 5: In-Browser Contract Deployment (For New Organizations)
-1. Navigate to [`/deploy`](https://whistle-git-main-rahul7686s-projects.vercel.app/) and select **1AM Deploy**.
+1. Navigate to [`/deploy`](https://whistle-sigma.vercel.app/#deploy) and select **1AM Deploy**.
 2. Connect your 1AM wallet on Preprod.
 3. Click **Deploy Whistle Contract via 1AM Extension**.
 4. The deployment transaction is synthesized and broadcast via 1AM ProofStation.

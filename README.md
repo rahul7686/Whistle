@@ -13,7 +13,7 @@ Whistle lets members of an organization (companies, DAOs, student bodies, open-s
 
 ## Live Demo
 
-- 🌐 **Preprod Web App**: [https://whistle-git-main-rahul7686s-projects.vercel.app](https://whistle-git-main-rahul7686s-projects.vercel.app)
+- 🌐 **Live Demo (Preprod Web App)**: [https://whistle-sigma.vercel.app](https://whistle-sigma.vercel.app)
 - 🎥 **Video Demo Walkthrough**: [Watch Demo on Google Drive](https://drive.google.com/file/d/1EtDqa7OfEIXpTFXmZ51Ci7fefmtJVmuZ/view?usp=sharing)
 - 💻 **GitHub Repository**: [https://github.com/rahul7686/Whistle](https://github.com/rahul7686/Whistle)
 - 📋 **Product Proposal Document**: [PROPOSAL.md](./PROPOSAL.md)
@@ -163,7 +163,8 @@ Automated CI/CD is configured via GitHub Actions in [`.github/workflows/ci.yml`]
 5. Compiles production web bundle (`npm run build`).
 
 - **Workflow Status**: [![CI/CD Pipeline](https://github.com/rahul7686/Whistle/actions/workflows/ci.yml/badge.svg)](https://github.com/rahul7686/Whistle/actions/workflows/ci.yml)
-- **Latest Passing Run**: [Run #36142992868](https://github.com/rahul7686/Whistle/actions/runs/36142992868)
+- **Latest Passing Run**: [Run #36242874283](https://github.com/rahul7686/Whistle/actions/runs/36242874283) (Node 20.x & 22.x passing)
+- **Pipeline Workflow**: [View All CI Runs](https://github.com/rahul7686/Whistle/actions/workflows/ci.yml)
 
 ---
 
