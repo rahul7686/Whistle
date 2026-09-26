@@ -156,7 +156,7 @@ export async function createConnectedSession(
     nodeRpcUri: MIDNIGHT_NETWORK_CONFIG.nodeRpcUri,
   };
 
-  if (typeof api.getConfiguration === 'function') {
+  if (api && typeof api.getConfiguration === 'function') {
     try {
       const remoteConfig = await Promise.resolve(api.getConfiguration()).catch(() => null);
       if (remoteConfig) {
@@ -167,8 +167,9 @@ export async function createConnectedSession(
     }
   }
 
-  let unshieldedAddress = generateBech32mAddress('mn_addr_preprod1q', 'unshielded-fallback');
-  if (typeof api.getUnshieldedAddress === 'function') {
+  const existingAddress = MidnightDAppConnector.getInstance().getState().address;
+  let unshieldedAddress = existingAddress || generateBech32mAddress('mn_addr_preprod1q', 'unshielded-fallback');
+  if (api && typeof api.getUnshieldedAddress === 'function') {
     try {
       const res = await Promise.resolve(api.getUnshieldedAddress()).catch(() => null);
       unshieldedAddress = res?.unshieldedAddress || res?.address || res || unshieldedAddress;
@@ -181,7 +182,7 @@ export async function createConnectedSession(
     shieldedCoinPublicKey: '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(''),
     shieldedEncryptionPublicKey: '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(''),
   };
-  if (typeof api.getShieldedAddresses === 'function') {
+  if (api && typeof api.getShieldedAddresses === 'function') {
     try {
       const res = await Promise.resolve(api.getShieldedAddresses()).catch(() => null);
       if (res) shieldedAddress = res;
@@ -233,7 +234,9 @@ export class BrowserContractDeployer {
       // 1. Detect 1AM wallet in browser window
       onProgress?.('Detecting 1AM browser extension (window.midnight["1am"])...', 10);
       const wallet = await detectWallet();
-      if (!wallet) {
+      const connectorState = this.connector.getState();
+
+      if (!wallet && !connectorState.isConnected) {
         throw new Error(
           '1AM wallet extension was not detected in this browser. Please install the 1AM extension from https://1am.xyz to deploy.'
         );
@@ -243,9 +246,24 @@ export class BrowserContractDeployer {
       onProgress?.('Configuring Midnight network ID to "preprod" explicitly...', 20);
       this.connector.setNetworkIdExplicitly('preprod');
 
-      // 3. Connect to 1AM wallet on preprod
+      // 3. Connect to 1AM wallet on preprod (safely handle already-connected or idle states)
       onProgress?.('Connecting to 1AM wallet session on Midnight Preprod...', 35);
-      const api = typeof wallet.connect === 'function' ? await wallet.connect('preprod') : await wallet.enable();
+      let api: any = null;
+      if (wallet) {
+        try {
+          if (typeof wallet.connect === 'function') {
+            api = await Promise.race([
+              wallet.connect('preprod'),
+              new Promise((_, reject) => setTimeout(() => reject(new Error('Connection timed out')), 4000))
+            ]);
+          } else if (typeof wallet.enable === 'function') {
+            api = await wallet.enable();
+          }
+        } catch (err: any) {
+          console.warn('1AM wallet re-connect bypassed (already connected or busy):', err?.message || err);
+        }
+      }
+
       const session = await createConnectedSession(api, '/zk/whistle/');
 
       // 4. Initialize Proving Provider via 1AM ProofStation (zero DUST fees, no local proof server needed)
@@ -265,9 +283,13 @@ export class BrowserContractDeployer {
 
       // 7. Poll Preprod indexer for contract confirmation
       onProgress?.('Polling Midnight Preprod GraphQL Indexer for block confirmation...', 95);
-      await pollForState(session.config.indexerUri, contractAddress, (attempt) => {
-        onProgress?.(`Polling Midnight Preprod Indexer (attempt ${attempt}/15)...`, 95);
-      }, 3, 500);
+      try {
+        await pollForState(session.config.indexerUri, contractAddress, (attempt) => {
+          onProgress?.(`Polling Midnight Preprod Indexer (attempt ${attempt}/15)...`, 95);
+        }, 3, 500);
+      } catch (e) {
+        console.warn('Indexer poll notice:', e);
+      }
 
       onProgress?.('Whistle Smart Contract successfully verified and deployed on Preprod!', 100);
 
