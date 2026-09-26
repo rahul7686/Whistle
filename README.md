@@ -164,7 +164,7 @@ Automated CI/CD is configured via GitHub Actions in [`.github/workflows/ci.yml`]
 5. Compiles production web bundle (`npm run build`).
 
 - **Workflow Status**: [![CI/CD Pipeline](https://github.com/rahul7686/Whistle/actions/workflows/ci.yml/badge.svg)](https://github.com/rahul7686/Whistle/actions/workflows/ci.yml)
-- **Latest Passing Run**: [Run #36257910081](https://github.com/rahul7686/Whistle/actions/runs/36257910081) (Node 20.x & 22.x passing)
+- **Latest Passing Run**: [Run #36271728462](https://github.com/rahul7686/Whistle/actions/runs/36271728462) (Node 20.x & 22.x passing)
 - **Pipeline Workflow**: [View All CI Runs](https://github.com/rahul7686/Whistle/actions/workflows/ci.yml)
 
 ---
