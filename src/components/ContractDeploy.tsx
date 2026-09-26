@@ -199,34 +199,44 @@ export const ContractDeploy: React.FC<ContractDeployProps> = ({
 
             {result.success && result.contractAddress && (
               <div className="space-y-3 font-mono text-xs">
-                <div className="bg-midnight-950/80 p-3 rounded-lg border border-midnight-700 space-y-1">
+                <div className="bg-midnight-950/80 p-3.5 rounded-lg border border-midnight-700 space-y-1.5">
                   <div className="flex items-center justify-between text-slate-400 text-[11px]">
-                    <span>Deployed Bech32m Address:</span>
+                    <span className="font-bold text-white uppercase tracking-wider font-sans">
+                      Verified Preprod Contract Address (For Rise In Submission):
+                    </span>
                     <span className="text-emerald-400 font-sans font-bold">Network: Preprod</span>
                   </div>
-                  <div className="text-emerald-400 font-bold select-all break-all">{result.contractAddress}</div>
+                  <div className="text-emerald-400 font-bold select-all break-all text-xs bg-midnight-900/80 p-2 rounded border border-emerald-500/30">
+                    {result.contractAddress}
+                  </div>
+                  <p className="text-[11px] text-slate-400 font-sans leading-normal">
+                    This is the mandatory <strong>Contract Address</strong> required on Rise In. Midnight smart contracts are identified and verified on-chain via this Bech32m address.
+                  </p>
                 </div>
 
                 <div className="bg-midnight-950/80 p-3 rounded-lg border border-midnight-700 space-y-1">
-                  <span className="text-slate-400 text-[11px]">Deployment Transaction Hash:</span>
-                  <div className="text-slate-300 select-all break-all">{result.txHash}</div>
+                  <div className="flex items-center justify-between text-slate-400 text-[11px]">
+                    <span>Deployment Transaction ID (Native 64-hex):</span>
+                    <span className="text-slate-500 font-sans">Shielded ZK State Transition</span>
+                  </div>
+                  <div className="text-slate-300 select-all break-all text-[11px]">{result.txHash}</div>
                 </div>
 
                 <div className="flex items-center space-x-3 pt-2">
                   <button
                     onClick={() => handleCopy(result.contractAddress!)}
-                    className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-midnight-800 text-xs font-semibold text-slate-200 hover:text-white border border-midnight-700"
+                    className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-midnight-accent text-xs font-bold text-midnight-950 hover:bg-cyan-300 transition-colors"
                   >
                     <Copy className="w-3.5 h-3.5" />
-                    <span>{copied ? 'Copied!' : 'Copy Address'}</span>
+                    <span>{copied ? 'Copied Contract Address!' : 'Copy Contract Address'}</span>
                   </button>
                   <a
-                    href="https://preprod.midnightexplorer.com/"
+                    href="https://preprod.midnightexplorer.com/contracts"
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-midnight-800 text-xs font-semibold text-midnight-accent hover:underline border border-midnight-700"
                   >
-                    <span>View on Midnight Explorer</span>
+                    <span>Inspect Contracts on Explorer</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>
